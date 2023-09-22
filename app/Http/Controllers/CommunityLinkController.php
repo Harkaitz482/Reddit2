@@ -12,7 +12,7 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        return view('community/index');
+        return view('community.index');
 
     }
 
