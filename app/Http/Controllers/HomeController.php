@@ -25,4 +25,7 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function metodo(Request $request) {
+        // Lógica para manejar la solicitud POST
+    }
 }
