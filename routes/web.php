@@ -79,3 +79,36 @@ Route::get('/host', function () {
     return "La dirección IP de la base de datos es: $dbHost";
 });
 
+Route::get('/Timezone',function(){
+    return config('app.timezone');
+});
+
+
+Route::view('/Ej3', 'inicio');
+
+Route::get('/fecha', function () {
+    $fecha = [
+        'dia' => date('d'),
+        'mes' => date('m'),
+        'ano' => date('Y'),
+    ];
+
+    return view('fecha', $fecha);
+});
+
+Route::get('/fechaCompact', function () {
+    $dia = date('d');
+    $mes = date('m');
+    $ano = date('Y');
+
+    return view('fecha', compact('dia', 'mes', 'ano'));
+});
+
+
+
+Route::get('/fechaWith', function () {
+    return view('fecha')
+        ->with('dia', date('d'))
+        ->with('mes', date('m'))
+        ->with('ano', date('Y'));
+});
