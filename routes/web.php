@@ -112,3 +112,4 @@ Route::get('/fechaWith', function () {
         ->with('mes', date('m'))
         ->with('ano', date('Y'));
 });
+
