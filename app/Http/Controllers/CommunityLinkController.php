@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
+
 use App\Models\CommunityLink;
 use Illuminate\Http\Request;
 
@@ -28,8 +31,27 @@ class CommunityLinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $data = $request->validate([
+
+            'title' => 'required|max:255',
+           
+           
+           
+            'link' => 'required|unique:community_links|url|max:255', 
+           
+           
+           
+            ]);
+           
+            $data['user_id'] = Auth::id();
+           
+            $data['channel_id'] = 1;
+           
+            CommunityLink::create($data);
+           
+            return back();
+           
+      }    
 
     /**
      * Display the specified resource.
