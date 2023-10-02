@@ -14,6 +14,12 @@
                         <small>Contributed by: {{ $link->creator->name }} {{ $link->updated_at->diffForHumans() }}</small>
                     </li>
                 @endforeach
+                @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+                @error('email', 'login')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
 
             </div>
             {{-- Right colum to show the form to upload a link --}}
@@ -47,5 +53,9 @@
             </div>
         </div>
         {{ $links->links() }}
+    </div>
+    <div>
+        <!-- Incluye el formulario para agregar enlaces -->
+        @include('partials.add-link')
     </div>
 @stop
