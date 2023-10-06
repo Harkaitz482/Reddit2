@@ -17,12 +17,13 @@ class CommunityLinkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() {
+    public function index()
+    {
         $links = CommunityLink::paginate(25);
-        $channels = Channel::orderBy('title','asc')->get();
+        $channels = Channel::orderBy('title', 'asc')->get();
 
-        return view('community/index', compact('links','channels'));
-      }
+        return view('community/index', compact('links', 'channels'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -38,30 +39,18 @@ class CommunityLinkController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-
             'title' => 'required|max:255',
-           
-           
-           
-            'link' => 'required|unique:community_links|url|max:255', 
-
+            'link' => 'required|unique:community_links|url|max:255',
             'channel_id' => 'required|exists:channels,id'
+        ]);
 
-           
-           
-           
-            ]);
-           
-            $data['user_id'] = Auth::id();
-           
-            $data['channel_id'] = 1;
-           
-            CommunityLink::create($data);
-            
-           
-            return back();
-           
-      }    
+        $data['user_id'] = Auth::id();
+
+        CommunityLink::create($data);
+
+
+        return back();
+    }
 
     /**
      * Display the specified resource.

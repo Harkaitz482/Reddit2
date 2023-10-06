@@ -18,8 +18,8 @@
             <div class="form-group">
                 <label for="link">Link:</label>
                 <input type="text" class="form-control" id="link" name="link" placeholder="What is the URL?" value="{{old('link')}}">
-                @error('link')
-                    <div class="alert alert-danger">{{ 'link incorrecto' }}</div>
+                 @error('link')
+                    <span class="text-danger">{{ $message }}</span>
                 @enderror
             </div>
 

@@ -5,8 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
 class CommunityLink extends Model
+
 {
+    protected $fillable = [
+        'channel_id',
+        'title',
+        'link',
+        'user_id',
+        
+    ];
     use HasFactory;
     public function creator()
     {
