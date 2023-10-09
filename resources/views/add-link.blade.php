@@ -17,7 +17,7 @@
 
             <div class="form-group">
                 <label for="link">Link:</label>
-                <input type="text" class="form-control" id="link" name="link" placeholder="What is the URL?" value="{{old('link')}}">
+                <input type="text" class="form-cont rol" id="link" name="link" placeholder="What is the URL?" value="{{old('link')}}">
                  @error('link')
                     <span class="text-danger">{{ $message }}</span>
                 @enderror
