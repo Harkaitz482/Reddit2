@@ -14,6 +14,7 @@ class CommunityLink extends Model
         'title',
         'link',
         'user_id',
+        'approved',
         
     ];
     use HasFactory;

@@ -45,8 +45,28 @@ class CommunityLinkController extends Controller
         ]);
 
         $data['user_id'] = Auth::id();
+        $user = Auth::User();
+        $trusted = $user->isTrusted();
+
+        $approved = $trusted ? true : false ;;
+
+        $data['approved'] = $approved;
 
         CommunityLink::create($data);
+      
+
+
+        
+
+
+
+
+
+        if ($trusted) {
+            return redirect()->back()->with('success', 'el enlace se ha creado correctamente');
+        } else {
+            return redirect()->back()->with('error', 'el enlace no se ha creado correctamente');
+        }
 
 
         return back();
