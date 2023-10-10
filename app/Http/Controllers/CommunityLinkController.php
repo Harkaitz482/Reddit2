@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Channel;
 
-
+use App\http\Requests\CommunityLinkForm;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -38,6 +38,8 @@ class CommunityLinkController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validated();
+
         $data = $request->validate([
             'title' => 'required|max:255',
             'link' => 'required|url|max:255',
@@ -48,25 +50,38 @@ class CommunityLinkController extends Controller
         $user = Auth::User();
         $trusted = $user->isTrusted();
 
-        $approved = $trusted ? true : false ;;
+        $approved = $trusted ? true : false;;
 
         $data['approved'] = $approved;
 
         CommunityLink::create($data);
-      
-
-
-        
 
 
 
 
 
-        if ($trusted) {
-            return redirect()->back()->with('success', 'el enlace se ha creado correctamente');
+
+
+
+        if (CommunityLink::hasAlreadyBeenSubmitted($data['link'])) {
+            
+            if ($approved == false) {
+                return back()->with('info', 'El enlace ya está publicado y aprobado pero usted es un usuario no verificado, por lo que no se actualizará en la lista');
+            }
+            if ($approved == true) {
+                return back()->with('success', 'link actualizado correctamente!');
+            } else {
+                return back()->with('info', 'object successfully updated, waiting for a moderator to accept it');
+            }
         } else {
-            return redirect()->back()->with('error', 'el enlace no se ha creado correctamente');
+            CommunityLink::create($data);
+            if ($approved == true) {
+                return back()->with('success', 'link created successfully!');
+            } else {
+                return back()->with('info', 'object successfully created, waiting for a moderator to accept it');
+            }
         }
+
 
 
         return back();
