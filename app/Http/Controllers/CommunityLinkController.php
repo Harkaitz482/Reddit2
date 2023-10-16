@@ -36,15 +36,11 @@ class CommunityLinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CommunityLinkForm $request)
     {
         $data = $request->validated();
 
-        $data = $request->validate([
-            'title' => 'required|max:255',
-            'link' => 'required|url|max:255',
-            'channel_id' => 'required|exists:channels,id'
-        ]);
+       
 
         $data['user_id'] = Auth::id();
         $user = Auth::User();
