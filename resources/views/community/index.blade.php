@@ -8,20 +8,24 @@
                 @include('flash-message')
 
 
-                <h1>Community</h1>
+                <h1><a href="/community"> <a href="/community" style="text-decoration: none; color:inherit">
+                            <h1>Community <span
+                                    style="color: {{ $channel ? $channel->color : 'inherit' }}">{{ $channel ? $channel->title : '' }}</span>
+                            </h1>
+                        </a></a></h1>
 
                 @if (count($links) > 0)
                     <ul>
                         @foreach ($links as $link)
-                            <li>
+                            <li class="bg-body">
+                                <a class="text-decoration-none label label-default p-1 border-rounded text-black rounded"
+                                    href="/community/{{ $link->channel->slug }}"
+                                    style="background-color:{{ $link->channel->color }}">{{ $link->channel->title }}</a>
                                 <a href="{{ $link->link }}" target="_blank">
                                     {{ $link->title }}
                                 </a>
                                 <small>Contributed by: {{ $link->creator->name }}
                                     {{ $link->updated_at->diffForHumans() }}</small>
-                                <span class="label label-default" style="background: {{ $link->channel->color }}">
-                                    {{ $link->channel->title }}
-                                </span>
                             </li>
                         @endforeach
                     </ul>

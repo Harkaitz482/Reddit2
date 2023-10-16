@@ -17,12 +17,19 @@ class CommunityLinkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Channel $channel = null)
     {
-        $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
+        // dd($channel);
         $channels = Channel::orderBy('title', 'asc')->get();
 
-        return view('community/index', compact('links', 'channels'));
+        if ($channel != null) {
+
+            $links = CommunityLink::where('approved', true)->where('channel_id', $channel->id)->latest('updated_at')->paginate(25);
+        } else {
+            $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
+        }
+
+        return view('community/index', compact('links', 'channels', 'channel'));
     }
 
     /**
@@ -38,13 +45,17 @@ class CommunityLinkController extends Controller
      */
     public function store(CommunityLinkForm $request)
     {
+        $link = new CommunityLink();
+        $link->user_id = Auth::id();
+
         $data = $request->validated();
 
-       
+
 
         $data['user_id'] = Auth::id();
         $user = Auth::User();
         $trusted = $user->isTrusted();
+
 
         $approved = $trusted ? true : false;;
 
@@ -59,8 +70,8 @@ class CommunityLinkController extends Controller
 
 
 
-        if (CommunityLink::hasAlreadyBeenSubmitted($data['link'])) {
-            
+        if ($link->hasAlreadyBeenSubmitted($data['link'])) {
+
             if ($approved == false) {
                 return back()->with('info', 'El enlace ya está publicado y aprobado pero usted es un usuario no verificado, por lo que no se actualizará en la lista');
             }
