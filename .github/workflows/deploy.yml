@@ -8,10 +8,10 @@ jobs:
    runs-on: debian-12
    steps:
       - name: Deploy
-      uses: appleboy/ssh-action@v0.1.8
-      with:
-            host: 46.183.117.80
-            port: 2222
-            username: harka
-            keys: ${{secrets.PRIVATE_KEY}}
-            script: "cd /var/www/html/Reddit2; git pull origin main; npm run build"
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+              host: 46.183.117.80
+              port: 2222
+              username: harka
+              keys: ${{secrets.PRIVATE_KEY}}
+              script: "cd /var/www/html/Reddit2; git pull origin main; npm run build"
