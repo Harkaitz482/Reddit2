@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
 
 jobs:
-   deploy:
-   name: Deploy to VPS
-   runs-on: debian-12
+  deploy:
+  name: Deploy to VPS
+  runs-on: debian-12
    steps:
       - name: Deploy
         uses: appleboy/ssh-action@v0.1.8
