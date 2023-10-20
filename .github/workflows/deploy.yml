@@ -14,4 +14,4 @@ jobs:
           port: 2222
           username: harka
           key: ${{secrets.PRIVATE_KEY}}
-          script: "cd /var/www/html/Reddit2; git pull origin main; npm run build"
+          script: "cd /var/www/html/Reddit2; git pull origin main; npm run build; sudo service php8.2-fpm reload"
