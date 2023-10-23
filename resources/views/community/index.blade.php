@@ -27,6 +27,7 @@
                                 <small>Contributed by: {{ $link->creator->name }}
                                     {{ $link->updated_at->diffForHumans() }}</small>
                             </li>
+                            <p class="votes">Votos: {{ $link->users->count() }}</p>
                         @endforeach
                     </ul>
                     {{ $links->links() }}

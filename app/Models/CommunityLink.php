@@ -31,6 +31,10 @@ class CommunityLink extends Model
     {
         return $this->belongsTo(Channel::class, 'channel_id');
     }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'community_link_users');
+    }
     public static function hasAlreadyBeenSubmitted($link)
     {
         if ($existing = static::where('link', $link)->first()) {
