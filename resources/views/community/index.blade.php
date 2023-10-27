@@ -3,6 +3,15 @@
 @section('content')
     <div class="container">
         <div class="row">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->exists('popular') ? '' : 'disabled' }}"
+                        href="{{ request()->url() }}">Most recent</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}" href="?popular">Most popular</a>
+                </li>
+            </ul>
             {{-- Left column to show all the links in the DB --}}
             <div class="col-md-8">
                 @include('flash-message')
@@ -31,15 +40,16 @@
                                     {{ csrf_field() }}
                                     <button type="submit"
                                         class="btn {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}" " {{ Auth::guest() ? 'disabled' : '' }}>
-                                            {{ $link->users()->count() }}
-                                        </button>
-                                    </form>
+                                                    {{ $link->users()->count() }}
+                                                </button>
+                                            </form>
 
-                                </li>
-                                <p class="votes">Votos: {{ $link->users->count() }}</p>
+                                        </li>
+                                        <p class="votes">Votos: {{ $link->users->count() }}</p>
      @endforeach
                     </ul>
-                    {{ $links->links() }}
+
+                    {{ $links->appends($_GET)->links() }}
                 @else
                     <p>No approved contributions yet</p>
                 @endif
