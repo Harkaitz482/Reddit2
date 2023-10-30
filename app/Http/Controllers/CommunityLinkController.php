@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 use App\Models\CommunityLink;
+use App\Queries\CommunityLinksQuery;
 use Illuminate\Http\Request;
 
 class CommunityLinkController extends Controller
@@ -24,16 +25,21 @@ class CommunityLinkController extends Controller
 
         if (request()->exists('popular')) {
             // otra consulta
-            $links = CommunityLink::where('approved', 1)->withCount('users')->orderBy('users_count', 'desc')->paginate(25);
+            $links = CommunityLinksQuery::getMostPopular();
         } else {
             if ($channel != null) {
-                $links = $channel->communitylinks()->where('approved', true)->where('channel_id', $channel->id)->latest('updated_at')->paginate(25);
+                $links = CommunityLinksQuery::getMostPopularbyChannel($channel);
             } else {
-                $links = CommunityLink::where('approved', true)->latest('updated_at')->paginate(25);
+                $links = CommunityLinksQuery::getAll();
             }
         }
 
+        if (request()->exists('busqueda') && request()->exists('popular')){
+            $links = CommunityLinksQuery::getBySearchandMostPopular(trim(request()->get('busqueda')));
+        } else if(request()->exists('busqueda')){
+            $links = CommunityLinksQuery::getBysearch(trim(request()->get('busqueda')));
 
+        }
 
         return view('community/index', compact('links', 'channels', 'channel'));
     }

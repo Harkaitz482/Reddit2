@@ -30,3 +30,4 @@ Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkContro
 Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
 
 
+

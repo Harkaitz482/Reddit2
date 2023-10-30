@@ -5,8 +5,9 @@
         <div class="row">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->exists('popular') ? '' : 'disabled' }}"
-                        href="{{ request()->url() }}">Most recent</a>
+                    <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}"
+                        href="?popular{{ request()->exists('busqueda') ? '&busqueda=' . request()->get('busqueda') : '' }}">Most
+                        popular</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}" href="?popular">Most popular</a>
@@ -40,12 +41,13 @@
                                     {{ csrf_field() }}
                                     <button type="submit"
                                         class="btn {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}" " {{ Auth::guest() ? 'disabled' : '' }}>
-                                                    {{ $link->users()->count() }}
-                                                </button>
-                                            </form>
+                                                        {{ $link->users()->count() }}
+                                                        <i class="bi bi-hand-thumbs-up"></i>
+                                                    </button>
+                                                </form>
 
-                                        </li>
-                                        <p class="votes">Votos: {{ $link->users->count() }}</p>
+                                            </li>
+                                            <p class="votes">Votos: {{ $link->users->count() }}</p>
      @endforeach
                     </ul>
 
