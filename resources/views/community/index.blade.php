@@ -5,12 +5,14 @@
         <div class="row">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}"
+                    <a class="nav-link {{ request()->exists('popular') ? '' : 'disabled' }}"
                         href="?popular{{ request()->exists('busqueda') ? '&busqueda=' . request()->get('busqueda') : '' }}">Most
-                        popular</a>
+                        recent</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}" href="?popular">Most popular</a>
+                    <a class="nav-link {{ request()->exists('popular') ? 'disabled' : '' }}"
+                        href="?popular{{ request()->exists('busqueda') ? '&busqueda=' . request()->get('busqueda') : '' }}">Most
+                        popular</a>     
                 </li>
             </ul>
             {{-- Left column to show all the links in the DB --}}
@@ -41,13 +43,13 @@
                                     {{ csrf_field() }}
                                     <button type="submit"
                                         class="btn {{ Auth::check() && Auth::user()->votedFor($link) ? 'btn-success' : 'btn-secondary' }}" " {{ Auth::guest() ? 'disabled' : '' }}>
-                                                        {{ $link->users()->count() }}
-                                                        <i class="bi bi-hand-thumbs-up"></i>
-                                                    </button>
-                                                </form>
+                                                            {{ $link->users()->count() }}
+                                                            <i class="bi bi-hand-thumbs-up"></i>
+                                                        </button>
+                                                    </form>
 
-                                            </li>
-                                            <p class="votes">Votos: {{ $link->users->count() }}</p>
+                                                </li>
+                                                <p class="votes">Votos: {{ $link->users->count() }}</p>
      @endforeach
                     </ul>
 

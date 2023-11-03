@@ -28,6 +28,8 @@ Route::get('/home', function () {
 Route::post('community', [App\Http\Controllers\CommunityLinkController::class, 'store'])->middleware('auth');
 Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkController::class, 'index']);
 Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
+Route::get('profile/edit',[App\Http\Controllers\ProfileController::class ,'edit'])->middleware('auth')->name('profile/edit');
+Route::post('profile/store',[App\Http\Controllers\ProfileController::class ,'store'])->middleware('auth')->name('profile/store');
 
 
 

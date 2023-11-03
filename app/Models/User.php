@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,8 +49,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->trusted;
     }
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 
-    
 
     public function votes(): BelongsToMany
     {
