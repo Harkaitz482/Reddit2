@@ -65,4 +65,11 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->votes->contains($link);
     }
+
+     static $rules =[
+        'name',
+        'email',
+        'password',
+
+     ];
 }

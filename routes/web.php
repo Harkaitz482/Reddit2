@@ -30,6 +30,7 @@ Route::get('community/{channel:slug}', [App\Http\Controllers\CommunityLinkContro
 Route::post('votes/{link}', [App\Http\Controllers\CommunityLinkUserController::class, 'store']);
 Route::get('profile/edit',[App\Http\Controllers\ProfileController::class ,'edit'])->middleware('auth')->name('profile/edit');
 Route::post('profile/store',[App\Http\Controllers\ProfileController::class ,'store'])->middleware('auth')->name('profile/store');
+Route::resource('users', 'App\Http\Controllers\UserController')->middleware('auth')->middleware('verified');
 
 
 
