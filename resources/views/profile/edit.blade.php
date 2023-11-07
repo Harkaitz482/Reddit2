@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <img src="{{ url('storage/' . Auth::user()->profile->imageUpload) }}">
+    <img src="{{ url('storage/'. Auth::user()->profile->imageUpload) }}">
 
     <form action="/profile/store" method="POST" id="updateImage" enctype="multipart/form-data">
         @csrf
