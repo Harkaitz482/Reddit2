@@ -62,8 +62,13 @@
                             @endif
                         @else
                             <li class="navbar-brand">
-                                <img src="{{ url('storage/' . Auth::user()->profile->imageUpload) }}"
-                                    style="height:39px;margin-left:10px">
+                                @if (Auth::user()->profile != null)
+                                    <img src="{{ url('storage/' . Auth::user()->profile->imageUpload) }}"
+                                        alt="imagen ususario" style="height: 50px;width:50px">
+                                @endif
+                                @can('viewAny', '\App\Models\User')
+                                <li><a href="/users">Dashboard</a></li>
+                            @endcan
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
@@ -73,7 +78,9 @@
 
 
 
+
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
 
                                     <a class="dropdown-item" href="{{ route('profile/edit') }}">
 
