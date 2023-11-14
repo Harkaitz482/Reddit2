@@ -53,46 +53,46 @@ class CommunityLinkController extends Controller
      */
     public function store(CommunityLinkForm $request)
     {
-        $link = new CommunityLink();
-        $link->user_id = Auth::id();
 
+
+        $user_id = $request->input('user_id');
         $data = $request->validated();
 
 
+        $approved = Auth::user()->isTrusted();
 
-        $data['user_id'] = Auth::id();
-        $user = Auth::User();
-        $trusted = $user->isTrusted();
-
-
-        $approved = $trusted ? true : false;;
+        $data['user_id'] = $user_id;
 
         $data['approved'] = $approved;
 
-        CommunityLink::create($data);
+        $link = new CommunityLink();
+
+        $link->user_id = Auth::id();
+
+
+
+        // $data['channel_id'] = 1;
+        // dd($data);
+        // CommunityLink::create($data);
+        // return back()->with('success', 'Item created successfully!');
+
 
         if ($link->hasAlreadyBeenSubmitted($data['link'])) {
-
-            if ($approved == false) {
-                return response()->with('info', 'El enlace ya está publicado y aprobado pero usted es un usuario no verificado, por lo que no se actualizará en la lista');
-            }
-            if ($approved == true) {
-                return response()->with('success', 'link actualizado correctamente!');
+            if ($approved === false) {
+                return response()->json(['info' => 'El enlace ya está publicado y aprobado, pero usted es un usuario no verificado, por lo que no se actualizará en la lista']);
+            } elseif ($approved === true) {
+                return response()->json(['success' => '¡Enlace actualizado correctamente!']);
             } else {
-                return response()->with('info', 'object successfully updated, waiting for a moderator to accept it');
+                return response()->json(['info' => 'Objeto actualizado con éxito, esperando que un moderador lo apruebe']);
             }
         } else {
             CommunityLink::create($data);
-            if ($approved == true) {
-                return response()->with('success', 'link created successfully!');
+            if ($approved === true) {
+                return response()->json(['success' => '¡Enlace creado exitosamente!']);
             } else {
-                return response()->with('info', 'object successfully created, waiting for a moderator to accept it');
+                return response()->json(['message' => 'Su enlace será revisado por el administrador antes de su publicación. Gracias por su contribución.'], 201);
             }
         }
-
-
-
-        return response()->json(['message' => "Your link will be reviewed for the administrator before publishing.Thanks for your contribution."], 201);
     }
 
     /**
