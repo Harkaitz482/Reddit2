@@ -116,6 +116,19 @@ class CommunityLinkController extends Controller
      */
     public function destroy(CommunityLink $communityLink)
     {
-        //
+        // Lógica para eliminar un enlace
+        // Verificar si el usuario autenticado es el propietario del enlace o es un administrador
+        $user = Auth::user();
+
+        if ($user->id !== $communityLink->user_id && !$user->isTrusted()) {
+            return response()->json(['message' => 'Unauthorized. You do not have permission to delete this link.'], 403);
+        }
+
+        // Eliminar el enlace
+        $communityLink->delete();
+
+        return response()->json(['message' => 'Link deleted successfully.'], 200);
     }
+
+
 }
